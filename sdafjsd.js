@@ -29,6 +29,9 @@ async function checkweather(city) {
         // Save data to localStorage
         localStorage.setItem(city, JSON.stringify([data]));
         //localStorage.setItem(city, JSON.stringify(data));
+        const iconCode = data.weather_icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        document.getElementById("weather-icon").src = iconUrl;
     }else {
         // Offline: Retrieve data from localStorage
         data = JSON.parse(localStorage.getItem(city));
@@ -40,9 +43,6 @@ async function checkweather(city) {
     description.innerHTML = data.description || "N/A";
     humidity.innerHTML = `Humidity: ${data.humidity}%` || "N/A";
     wind.innerHTML = `Wind: ${data.wind} km/h` || "N/A";
-    const iconCode = data.weather_icon;
-    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    document.getElementById("weather-icon").src = iconUrl;
   } catch (error) {
    //console.error
     cityName.innerHTML = "Data not available";
@@ -77,6 +77,5 @@ submitButton.addEventListener("click", () => {
     alert("Please enter a city name.");
     return;
   }
-  getAndDisplayWeather(city);
   checkweather(city);
 });
